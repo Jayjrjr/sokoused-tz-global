@@ -1,637 +1,299 @@
 <!DOCTYPE html>
 <html lang="sw">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SokoUsed TZ &amp; Global</title>
-  <style>
-    :root {
-      --bg: #071110;
-      --surface: #0e1e1c;
-      --surface-2: #142926;
-      --border: #1e3d38;
-      --text: #eef7f5;
-      --muted: #9eb8b3;
-      --accent: #10b981;
-      --accent-dark: #059669;
-      --accent-soft: rgba(16, 185, 129, 0.14);
-      --danger: #ef4444;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SokoUsed TZ & Global | Uza na Nunua Vitu Used</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        },
+                        accent: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        };
+    </script>
 
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-      min-height: 100vh;
-    }
-
-    button, input, select, textarea {
-      font-family: inherit;
-      color: inherit;
-    }
-
-    button { cursor: pointer; border: none; background: none; }
-
-    .top-strip {
-      background: #050c0b;
-      border-bottom: 1px solid var(--border);
-      padding: 8px 16px;
-      font-size: 12px;
-      color: var(--muted);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .top-actions { display: flex; gap: 8px; align-items: center; }
-
-    .pill-btn {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      padding: 5px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .pill-btn:hover { border-color: var(--accent); }
-
-    .badge-num {
-      background: var(--accent);
-      color: #03150f;
-      font-weight: 700;
-      padding: 1px 6px;
-      border-radius: 999px;
-      font-size: 11px;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: rgba(7, 17, 16, 0.95);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border);
-      padding: 12px 16px;
-    }
-
-    .nav-wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 800;
-      font-size: 18px;
-    }
-
-    .brand-tag {
-      background: var(--accent-soft);
-      color: var(--accent);
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      font-size: 10px;
-      padding: 2px 7px;
-      border-radius: 999px;
-      letter-spacing: 0.4px;
-    }
-
-    .search-box {
-      flex: 1 1 220px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 8px 12px;
-      font-size: 14px;
-    }
-
-    .search-box:focus, input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #03150f;
-      font-weight: 700;
-      padding: 9px 14px;
-      border-radius: 10px;
-      font-size: 14px;
-    }
-
-    .btn-primary:hover { background: var(--accent-dark); color: #fff; }
-
-    .btn-secondary {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      padding: 9px 14px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .btn-secondary:hover { border-color: var(--accent); }
-
-    .container { max-width: 1100px; margin: 0 auto; padding: 20px 16px 48px; }
-
-    .hero {
-      background: linear-gradient(145deg, #0d2320, #081413);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 24px 20px;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 { font-size: clamp(24px, 5vw, 38px); margin: 10px 0; line-height: 1.15; }
-    .hero p { color: var(--muted); max-width: 720px; font-size: 14px; }
-
-    .hero-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-
-    .region-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 20px;
-    }
-
-    .region-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--muted); }
-
-    .region-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 10px;
-    }
-
-    .region-btn {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      font-weight: 700;
-      font-size: 14px;
-      text-align: center;
-    }
-
-    .region-btn.active {
-      background: var(--accent);
-      color: #03150f;
-      border-color: var(--accent);
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 14px;
-      text-align: center;
-    }
-
-    .stat-box {
-      background: #091615;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 8px;
-    }
-
-    .stat-val { font-size: 20px; font-weight: 800; color: var(--accent); }
-    .stat-lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
-
-    .cat-bar {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      margin-bottom: 18px;
-    }
-
-    .cat-btn {
-      white-space: nowrap;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 7px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .cat-btn.active {
-      background: var(--accent);
-      color: #03150f;
-      border-color: var(--accent);
-    }
-
-    .listings-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 14px;
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .card-top { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
-
-    .tag {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    .tag-pending {
-      background: rgba(245, 158, 11, 0.16);
-      color: #fbbf24;
-    }
-
-    .price { font-size: 18px; font-weight: 800; color: var(--accent); }
-    .card h3 { font-size: 16px; margin: 4px 0; }
-    .meta { font-size: 12px; color: var(--muted); }
-    .desc { font-size: 13px; color: #cce0dc; }
-
-    .card-btns { display: flex; gap: 8px; flex-wrap: wrap; }
-
-    .btn-sm {
-      padding: 7px 11px;
-      border-radius: 9px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    /* Modals */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.78);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 14px;
-      z-index: 50;
-    }
-
-    .modal-backdrop.open { display: flex; }
-
-    .modal {
-      width: 100%;
-      max-width: 540px;
-      max-height: 90vh;
-      overflow-y: auto;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 20px;
-    }
-
-    .modal-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-
-    .modal-head h2 { font-size: 18px; }
-
-    .close-btn {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      font-weight: 700;
-    }
-
-    .field { margin-bottom: 12px; }
-    .field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 5px; }
-    .field input, .field select, .field textarea {
-      width: 100%;
-      background: #081413;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 9px 11px;
-      font-size: 14px;
-    }
-
-    .chat-log {
-      background: #081413;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      min-height: 180px;
-      max-height: 280px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .msg {
-      padding: 9px 12px;
-      border-radius: 12px;
-      font-size: 13px;
-      white-space: pre-wrap;
-      max-width: 90%;
-    }
-
-    .msg-user {
-      align-self: flex-end;
-      background: var(--accent);
-      color: #03150f;
-      font-weight: 600;
-    }
-
-    .msg-ai {
-      align-self: flex-start;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--accent);
-      color: #03150f;
-      font-weight: 700;
-      padding: 9px 16px;
-      border-radius: 999px;
-      font-size: 13px;
-      z-index: 80;
-      display: none;
-    }
-
-    .toast.show { display: block; }
-  </style>
+    <style>
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
-<body>
-  <div class="top-strip">
-    <span id="topNotice">Kila tangazo linakaguliwa na Admin Mkuu</span>
-    <div class="top-actions">
-      <button type="button" class="pill-btn" id="langBtn">SW / EN</button>
-      <button type="button" class="pill-btn" id="adminBtn">
-        <span>Admin Mkuu</span>
-        <span class="badge-num" id="pendingCount">2</span>
-      </button>
-    </div>
-  </div>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white">
 
-  <header>
-    <div class="nav-wrap">
-      <button type="button" class="brand" id="homeBtn">
-        <span>SokoUsed</span>
-        <span class="brand-tag">TZ &amp; GLOBAL</span>
-      </button>
-      <input type="search" id="searchInput" class="search-box" placeholder="Tafuta bidhaa used (mf. iPhone, Gari, Spika)..." />
-      <button type="button" class="btn-primary" id="openPostBtn">+ Tangaza Bidhaa</button>
-    </div>
-  </header>
+    <!-- Toast Notification Container (No alert() or confirm()) -->
+    <div id="toast-container" class="fixed top-20 right-4 left-4 sm:left-auto z-[100] flex flex-col gap-2 max-w-sm w-auto sm:w-full pointer-events-none"></div>
 
-  <main class="container">
-    <section class="hero">
-      <span class="tag">Soko la Bidhaa Zilizotumika — Tanzania &amp; Kimataifa</span>
-      <h1 id="heroTitle">Uza na Nunua Vitu</h1>
-      <p id="heroSub">
-        Tangaza simu, magari, vyombo vya muziki, vifaa vya nyumbani na electronics kutoka Dar es Salaam, Mbeya, Kyela, Arusha hadi Dubai, Nairobi na Ulaya. Kila tangazo linathibitishwa na Admin Mkuu.
-      </p>
-      <div class="hero-btns">
-        <button type="button" class="btn-primary" id="heroPostBtn">Weka Tangazo Bure</button>
-        <button type="button" class="btn-secondary" id="openAiBtn">Uliza AI Bei &amp; Ushauri</button>
-      </div>
+    <!-- Top Announcement Bar -->
+    <div class="bg-slate-900 text-slate-200 text-xs py-2.5 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center gap-3 min-w-0">
+                <span class="flex items-center gap-1.5 text-brand-400 font-medium truncate">
+                    <i class="fa-solid fa-shield-halved shrink-0"></i>
+                    <span data-i18n="top_verified">Kila tangazo linakaguliwa na Admin Mkuu</span>
+                </span>
+                <span class="hidden md:inline text-slate-500">|</span>
+                <span class="hidden md:flex items-center gap-1.5 truncate">
+                    <i class="fa-solid fa-globe text-accent-400 shrink-0"></i>
+                    <span data-i18n="top_regions">Tanzania (Dar, Mbeya, Kyela, Arusha) & Kimataifa (Dubai, Nairobi, UK)</span>
+                </span>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-3 ml-auto shrink-0">
+                <!-- Language Switcher -->
+                <button type="button" onclick="toggleLanguage()" class="min-h-[36px] flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-white px-3 py-1.5 rounded-full transition text-xs font-medium border border-slate-700">
+                    <i class="fa-solid fa-language text-brand-400"></i>
+                    <span id="lang-label">SW / EN</span>
+                </button>
+
+                <!-- Admin Mkuu Trigger -->
+                <button type="button" onclick="openAdminModal()" class="min-h-[36px] flex items-center gap-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 px-3 py-1.5 rounded-full transition text-xs font-semibold">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span data-i18n="admin_btn">Admin Mkuu</span>
+                    <span id="pending-badge-nav" class="bg-amber-500 text-slate-950 font-bold px-1.5 py-0.5 rounded-full text-[10px] leading-none">2</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="sticky top-0 z-40 glass-effect border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center min-h-[68px] md:min-h-[80px] gap-2 sm:gap-4 py-2">
+                <!-- Brand Logo -->
+                <a href="#" onclick="resetFilters()" class="flex items-center gap-2 sm:gap-2.5 min-w-0 group">
+                    <div class="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-gradient-to-br from-brand-600 to-brand-800 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition shrink-0">
+                        <i class="fa-solid fa-bag-shopping text-lg md:text-xl"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-1 flex-wrap">
+                            <span class="font-extrabold text-base sm:text-lg md:text-xl tracking-tight text-slate-900 truncate">Soko<span class="text-brand-600">Used</span></span>
+                            <span class="text-[10px] font-bold uppercase tracking-wider bg-accent-500 text-slate-950 px-1.5 py-0.5 rounded-md">TZ & Global</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 hidden sm:block truncate" data-i18n="tagline">Soko Salama la Vitu Vilivyotumika</p>
+                    </div>
+                </a>
+
+                <!-- Desktop Search Bar -->
+                <div class="hidden md:flex flex-1 max-w-xl mx-2 lg:mx-4">
+                    <div class="relative w-full flex items-center">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 text-slate-400"></i>
+                        <input type="text" id="desktop-search" oninput="handleSearch(this.value)" placeholder="Tafuta iPhone, Spika, Gari, Sofa, Laptop..." class="w-full min-h-[44px] pl-10 pr-24 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition">
+                        <button type="button" onclick="document.getElementById('marketplace-section').scrollIntoView({behavior:'smooth'})" class="absolute right-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-3.5 py-2 rounded-lg transition">
+                            <span data-i18n="search_btn">Tafuta</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Navigation Actions -->
+                <div class="flex items-center gap-2 shrink-0">
+                    <a href="#mawasiliano-section" class="hidden lg:flex items-center gap-1.5 min-h-[44px] text-sm font-medium text-slate-600 hover:text-brand-600 px-3 py-2 rounded-xl hover:bg-slate-100 transition">
+                        <i class="fa-solid fa-headset"></i>
+                        <span data-i18n="nav_contact">Mawasiliano</span>
+                    </a>
+
+                    <button type="button" onclick="openAiChat()" class="min-h-[44px] flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-brand-700 bg-brand-50 hover:bg-brand-100 border border-brand-200 px-3 py-2 rounded-xl transition">
+                        <i class="fa-solid fa-wand-magic-sparkles text-brand-600"></i>
+                        <span class="hidden sm:inline" data-i18n="nav_ai">Msaidizi AI</span>
+                    </button>
+
+                    <button type="button" onclick="openPostModal()" class="min-h-[44px] flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white text-xs sm:text-sm font-bold px-3.5 sm:px-4 py-2 rounded-xl shadow-md shadow-brand-600/20 hover:shadow-lg transition transform active:scale-95">
+                        <i class="fa-solid fa-plus-circle"></i>
+                        <span data-i18n="post_ad_btn">Tangaza Bidhaa</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Search Bar -->
+            <div class="pb-3 md:hidden">
+                <div class="relative w-full flex items-center">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 text-slate-400 text-sm"></i>
+                    <input type="text" id="mobile-search" oninput="handleSearch(this.value)" placeholder="Tafuta bidhaa used (mf. iPhone, Gari, Spika)..." class="w-full min-h-[44px] pl-10 pr-4 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="relative bg-slate-900 overflow-hidden">
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:20px_20px]"></div>
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-brand-600/20 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-accent-500/10 rounded-full blur-3xl"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7 space-y-5">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-300 text-xs font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse shrink-0"></span>
+                        <span data-i18n="hero_badge">Jukwaa Namba 1 la Bidhaa Used Ndani & Nje ya Tanzania</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                        <span data-i18n="hero_title_1">Uza na Nunua Vitu</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-accent-400" data-i18n="hero_title_2">Used Kwa Usalama</span>
+                    </h1>
+
+                    <p class="text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed" data-i18n="hero_desc">
+                        Tangaza simu, magari, vyombo vya muziki, vifaa vya nyumbani na electronics kutoka Dar es Salaam, Mbeya, Kyela, Arusha hadi Dubai, Nairobi na Ulaya. Kila tangazo linathibitishwa na Admin Mkuu.
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-3 pt-1">
+                        <button type="button" onclick="openPostModal()" class="min-h-[44px] bg-brand-500 hover:bg-brand-600 text-slate-950 font-bold px-6 py-3 rounded-xl transition flex items-center gap-2 shadow-lg shadow-brand-500/25">
+                            <i class="fa-solid fa-camera"></i>
+                            <span data-i18n="hero_cta_sell">Weka Tangazo Bure</span>
+                        </button>
+                        <button type="button" onclick="openAiChat()" class="min-h-[44px] bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 font-semibold px-5 py-3 rounded-xl transition flex items-center gap-2">
+                            <i class="fa-solid fa-robot text-accent-400"></i>
+                            <span data-i18n="hero_cta_ai">Uliza AI Bei & Ushauri</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Stats & Market Selector Card -->
+                <div class="lg:col-span-5">
+                    <div class="bg-slate-800/80 backdrop-blur-md border border-slate-700/80 rounded-2xl p-5 sm:p-6 shadow-xl">
+                        <h3 class="text-white font-bold text-base mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-earth-africa text-brand-400"></i>
+                            <span data-i18n="region_box_title">Chagua Eneo la Soko</span>
+                        </h3>
+
+                        <div class="grid grid-cols-3 gap-2.5 mb-5">
+                            <button type="button" onclick="setRegionFilter('ALL')" id="reg-btn-ALL" class="region-btn active min-h-[56px] bg-brand-600 text-white py-2.5 px-2 sm:px-3 rounded-xl text-xs font-bold transition text-center border border-brand-500">
+                                <i class="fa-solid fa-layer-group block text-base mb-1"></i>
+                                <span data-i18n="reg_all">Zote</span>
+                            </button>
+                            <button type="button" onclick="setRegionFilter('TZ')" id="reg-btn-TZ" class="region-btn min-h-[56px] bg-slate-900/80 hover:bg-slate-700 text-slate-300 py-2.5 px-2 sm:px-3 rounded-xl text-xs font-bold transition text-center border border-slate-700">
+                                <span class="block text-base mb-0.5">🇹🇿</span>
+                                <span data-i18n="reg_tz">Ndani ya TZ</span>
+                            </button>
+                            <button type="button" onclick="setRegionFilter('INTL')" id="reg-btn-INTL" class="region-btn min-h-[56px] bg-slate-900/80 hover:bg-slate-700 text-slate-300 py-2.5 px-2 sm:px-3 rounded-xl text-xs font-bold transition text-center border border-slate-700">
+                                <i class="fa-solid fa-plane-departure block text-base mb-1 text-accent-400"></i>
+                                <span data-i18n="reg_intl">Nje ya TZ</span>
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-3 pt-4 border-t border-slate-700/80 text-center">
+                            <div>
+                                <div id="stat-live-count" class="text-xl sm:text-2xl font-extrabold text-white">6</div>
+                                <div class="text-[11px] text-slate-400" data-i18n="stat_active">Matangazo Hai</div>
+                            </div>
+                            <div>
+                                <div class="text-xl sm:text-2xl font-extrabold text-brand-400">100%</div>
+                                <div class="text-[11px] text-slate-400" data-i18n="stat_verified">Ukaguzi Admin</div>
+                            </div>
+                            <div>
+                                <div class="text-xl sm:text-2xl font-extrabold text-accent-400">24/7</div>
+                                <div class="text-[11px] text-slate-400" data-i18n="stat_ai">Msaada wa AI</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section class="region-card">
-      <div class="region-title">Chagua Eneo la Soko</div>
-      <div class="region-grid" id="regionGroup">
-        <button type="button" class="region-btn active" data-region="ALL">Zote</button>
-        <button type="button" class="region-btn" data-region="TZ">Ndani ya TZ</button>
-        <button type="button" class="region-btn" data-region="GLOBAL">Nje ya TZ</button>
-      </div>
+    <!-- Main Marketplace Section -->
+    <main id="marketplace-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
 
-      <div class="stats-grid">
-        <div class="stat-box">
-          <div class="stat-val" id="liveCount">0</div>
-          <div class="stat-lbl">Matangazo Hai</div>
+        <!-- Filter & Category Bar -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <!-- Categories Pills -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 no-scrollbar" id="category-filters">
+                <button type="button" onclick="setCategoryFilter('ALL')" data-cat="ALL" class="cat-pill active min-h-[44px] shrink-0 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-white shadow-sm transition">
+                    <i class="fa-solid fa-border-all mr-1.5"></i><span data-i18n="cat_all">Zote</span>
+                </button>
+                <button type="button" onclick="setCategoryFilter('Simu')" data-cat="Simu" class="cat-pill min-h-[44px] shrink-0 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-brand-500 transition">
+                    <i class="fa-solid fa-mobile-screen mr-1.5 text-brand-600"></i><span data-i18n="cat_phones">Simu</span>
+                </button>
+                <button type="button" onclick="setCategoryFilter('Electronics')" data-cat="Electronics" class="cat-pill min-h-[44px] shrink-0 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-brand-500 transition">
+                    <i class="fa-solid fa-laptop mr-1.5 text-brand-600"></i>Electronics
+                </button>
+                <button type="button" onclick="setCategoryFilter('Sound')" data-cat="Sound" class="cat-pill min-h-[44px] shrink-0 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-brand-500 transition">
+                    <i class="fa-solid fa-volume-high mr-1.5 text-brand-600"></i><span data-i18n="cat_sound">Sound</span>
+                </button>
+                <button type="button" onclick="setCategoryFilter('Magari')" data-cat="Magari" class="cat-pill min-h-[44px] shrink-0 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-brand-500 transition">
+                    <i class="fa-solid fa-car mr-1.5 text-brand-600"></i><span data-i18n="cat_vehicles">Magari</span>
+                </button>
+                <button type="button" onclick="setCategoryFilter('Furniture')" data-cat="Furniture" class="cat-pill min-h-[44px] shrink-0 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-brand-500 transition">
+                    <i class="fa-solid fa-couch mr-1.5 text-brand-600"></i>Furniture
+                </button>
+                <button type="button" onclick="setCategoryFilter('Mitindo')" data-cat="Mitindo" class="cat-pill min-h-[44px] shrink-0 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-brand-500 transition">
+                    <i class="fa-solid fa-shirt mr-1.5 text-brand-600"></i><span data-i18n="cat_fashion">Mitindo</span>
+                </button>
+            </div>
+
+            <!-- Sort Select -->
+            <div class="flex items-center gap-2 shrink-0">
+                <select id="sort-select" onchange="renderProducts()" class="w-full sm:w-auto min-h-[44px] bg-white border border-slate-200 text-slate-700 text-xs sm:text-sm font-medium rounded-xl px-3.5 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <option value="featured" data-i18n="sort_featured">Panga: Maalum & Mpya</option>
+                    <option value="price_low" data-i18n="sort_low">Bei: Ndogo kwenda Kubwa</option>
+                    <option value="price_high" data-i18n="sort_high">Bei: Kubwa kwenda Ndogo</option>
+                </select>
+            </div>
         </div>
-        <div class="stat-box">
-          <div class="stat-val">100%</div>
-          <div class="stat-lbl">Ukaguzi Admin</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-val">24/7</div>
-          <div class="stat-lbl">Msaada wa AI</div>
-        </div>
-      </div>
-    </section>
 
-    <div class="cat-bar" id="catGroup">
-      <button type="button" class="cat-btn active" data-cat="ALL">Zote</button>
-      <button type="button" class="cat-btn" data-cat="Simu">Simu</button>
-      <button type="button" class="cat-btn" data-cat="Electronics">Electronics</button>
-      <button type="button" class="cat-btn" data-cat="Magari">Magari</button>
-      <button type="button" class="cat-btn" data-cat="Nyumbani">Nyumbani</button>
-      <button type="button" class="cat-btn" data-cat="Muziki">Muziki</button>
-    </div>
-
-    <section class="listings-grid" id="listingsGrid"></section>
-  </main>
-
-  <!-- Post Listing Modal -->
-  <div class="modal-backdrop" id="postModal">
-    <div class="modal">
-      <div class="modal-head">
-        <h2>Weka Tangazo la Bidhaa</h2>
-        <button type="button" class="close-btn" data-close="postModal">&times;</button>
-      </div>
-      <form id="postForm">
-        <div class="field">
-          <label>Jina la Bidhaa</label>
-          <input type="text" id="pTitle" required placeholder="mf. Samsung Galaxy A06 128GB" />
-        </div>
-        <div class="field">
-          <label>Bei (andika namba au mf. TZS 240,000 / $120)</label>
-          <input type="text" id="pPrice" required placeholder="mf. TZS 240,000" />
-        </div>
-        <div class="field">
-          <label>Eneo la Soko</label>
-          <select id="pRegion">
-            <option value="TZ">Ndani ya TZ</option>
-            <option value="GLOBAL">Nje ya TZ</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Kundi</label>
-          <select id="pCategory">
-            <option value="Simu">Simu</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Magari">Magari</option>
-            <option value="Nyumbani">Nyumbani</option>
-            <option value="Muziki">Muziki</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Mji / Nchi</label>
-          <input type="text" id="pLocation" required placeholder="mf. Kyela / Mbeya / Dubai" />
-        </div>
-        <div class="field">
-          <label>Maelezo ya Hali ya Bidhaa</label>
-          <textarea id="pDesc" rows="3" required placeholder="Eleza hali ya bidhaa, betri, au usafirishaji..."></textarea>
-        </div>
-        <div style="display:flex; gap:8px; flex-wrap:wrap;">
-          <button type="submit" class="btn-primary">Tuma Tangazo</button>
-          <button type="button" class="btn-secondary" id="aiDraftBtn">Andika Tangazo kwa AI</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- AI Modal -->
-  <div class="modal-backdrop" id="aiModal">
-    <div class="modal">
-      <div class="modal-head">
-        <h2>Msaidizi wa AI — SokoUsed</h2>
-        <button type="button" class="close-btn" data-close="aiModal">&times;</button>
-      </div>
-      <div class="chat-log" id="chatLog">
-        <div class="msg msg-ai">Habari! Uliza makadirio ya bei ya bidhaa used (TZS/USD), kuandika tangazo, au ushauri wa ununuzi salama.</div>
-      </div>
-      <form id="chatForm" style="display:flex; gap:8px;">
-        <input type="text" id="chatInput" class="search-box" placeholder="Andika swali lako hapa..." required />
-        <button type="submit" class="btn-primary" id="chatSendBtn">Tuma</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Admin Modal -->
-  <div class="modal-backdrop" id="adminModal">
-    <div class="modal">
-      <div class="modal-head">
-        <h2>Admin Mkuu (PIN: 1234)</h2>
-        <button type="button" class="close-btn" data-close="adminModal">&times;</button>
-      </div>
-      <div id="adminLockView">
-        <div class="field">
-          <label>Ingiza PIN ya Admin</label>
-          <input type="password" id="adminPinInput" placeholder="1234" />
-        </div>
-        <button type="button" class="btn-primary" id="unlockAdminBtn">Fungua Paneli</button>
-      </div>
-      <div id="adminPanelView" style="display:none;">
-        <p class="meta" style="margin-bottom:12px;">Idhinisha au futa matangazo yanayosubiri ukaguzi:</p>
-        <div id="adminList" style="display:flex; flex-direction:column; gap:10px;"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="toast" id="toast"></div>
-
-  <script>
-    const STORAGE_KEY = "sokoused_tz_global_items_v1";
-
-    const DEFAULT_ITEMS = [
-      { id: 1, title: "Samsung Galaxy A06 (128GB)", price: "TZS 260,000", region: "TZ", category: "Simu", location: "Kyela, Mbeya", desc: "Imetumika vizuri, haina mpasuko, betri safi.", status: "approved" },
-      { id: 2, title: "Power Amplifier & Bass Setup", price: "TZS 1,850,000", region: "TZ", category: "Muziki", location: "Mbeya", desc: "Inafanya kazi vizuri kwa matukio na ukumbi.", status: "approved" },
-      { id: 3, title: "HP Laptop Core i5 8GB RAM", price: "TZS 520,000", region: "TZ", category: "Electronics", location: "Dar es Salaam", desc: "Betri inakaa muda mzuri, chaja ipo.", status: "approved" },
-      { id: 4, title: "Toyota Wish Used Import", price: "$6,400", region: "GLOBAL", category: "Magari", location: "Dubai / Dar", desc: "Injini safi, tayari kwa taratibu za usafirishaji.", status: "approved" },
-      { id: 5, title: "Smart TV 43 Inch Clean", price: "TZS 430,000", region: "TZ", category: "Electronics", location: "Arusha", desc: "Skrini haina mstari, remote ipo.", status: "approved" },
-      { id: 6, title: "Home Fridge Double Door", price: "$210", region: "GLOBAL", category: "Nyumbani", location: "Nairobi", desc: "Inapoozesha vizuri sana na haina kutu.", status: "approved" },
-      { id: 7, title: "iPhone 12 128GB Unlocked", price: "TZS 690,000", region: "TZ", category: "Simu", location: "Mwanza", desc: "Face ID inafanya kazi, haijafunguliwa.", status: "pending" },
-      { id: 8, title: "Sound Mixer 12 Channel", price: "TZS 650,000", region: "TZ", category: "Muziki", location: "Kyela", desc: "Channel zote safi, tayari kutumika.", status: "pending" }
-    ];
-
-    let items = loadItems();
-    let activeRegion = "ALL";
-    let activeCat = "ALL";
-    let isSw = true;
-    const chatHistory = [];
-
-    function loadItems() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return [...DEFAULT_ITEMS];
-        const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) && parsed.length ? parsed : [...DEFAULT_ITEMS];
-      } catch {
-        return [...DEFAULT_ITEMS];
-      }
-    }
-
-    function saveItems() {
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch {}
-    }
-
-    function showToast(msg) {
-      const el = document.getElementById("toast");
-      el.textContent = msg;
-      el.classList.add("show");
-      setTimeout(() => el.classList.remove("show"), 2600);
-    }
-
-    function openModal(id) {
-      document.getElementById(id).classList.add("open");
-    }
-
-    function closeModal(id) {
-      document.getElementById(id).classList.remove("open");
-    }
-
-    function render() {
-      const q = document.getElementById("searchInput").value.trim().toLowerCase();
-      const approved = items.filter((i) => i.status === "approved");
-      const pending = items.filter((i) => i.status === "pending");
-
-      document.getElementById("liveCount").textContent = String(approved.length);
-      document.getElementById("pendingCount").textContent = String(pending.length);
-
-      const filtered = approved.filter((item) => {
-        const matchRegion = activeRegion === "ALL" || item.region === activeRegion;
-        const matchCat = activeCat === "ALL" || item.category === activeCat;
-        const matchQuery =
-          !q ||
-          item.title.toLowerCase().includes(q) ||
-          item.location.toLowerCase().includes(q) ||
-          item.desc.toLowerCase().includes(q);
-        return matchRegion && matchCat && matchQuery;
-      });
-
-      const grid = document.getElementById("listingsGrid");
-      if (!filtered.length) {
-        grid.innerHTML = '<div class="card"><p class="meta">Hakuna tangazo linalolingana na chaguo lako kwa sasa.</p></div>';
-      } else {
-        grid.innerHTML = filtered
-          .map(
-            (item) => `
-          <article class="card">
-            <div>
-              <div class="card-top">
-                <span class="tag">${item.region === "TZ" ? "Tanzania" : "Global"} · ${escapeHtml(item.category)}</span>
-                <span class="meta">${escapeHtml(item.location)}</span>
-              </div>
-              <h3>${escapeHtml(item.title)}</h3>
-              <div class="price">${escapeHtml(item.price)}</div>
-        
+        <!-- Active Filter Summary -->
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
+                <span data-i18n="listings_heading">Bidhaa Zinazopatikana</span>
+                <span id="results-count" class="text-xs font-bold bg-brand-100 text-brand-800 px-2.5 py-0.5 rounded-full">0</span>
+  
